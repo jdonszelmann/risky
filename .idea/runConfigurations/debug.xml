@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="debug" type="CLion_Remote" debugger="/usr/bin/riscv64-unknown-elf-gdb" remoteCommand="localhost:1234" symbolFile="$PROJECT_DIR$/target/riscv64gc-unknown-none-elf/debug/risc-v-kernel" sysroot="">
+    <method v="2" />
+  </configuration>
+</component>

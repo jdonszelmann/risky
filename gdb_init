@@ -1,0 +1,11 @@
+set history save on
+set confirm off
+target remote :1234
+set print asm-demangle on
+monitor reset halt
+layout asm
+layout regs
+
+symbol-file target/riscv64gc-unknown-none-elf/release/risc-v-kernel
+
+# quit
