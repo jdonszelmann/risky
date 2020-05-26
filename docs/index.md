@@ -1,6 +1,7 @@
 
 # Risky doumentation index
 
+* [Building](building.md)
 * [Running](running.md)
     * [Running under clion](clion.md#running-risky-in-clion)
     
