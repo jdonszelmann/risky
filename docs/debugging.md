@@ -6,7 +6,7 @@ To debug risky, you will first have to [run risky with qemu](running.md#qemu) an
 Now you can run qemu with the `-s -S` flags which make qemu wait on boot, and run a remote debug server on `localhost:1234`. To directly debug Risky with cargo, run:
 
 ```shell script
-export CARGO_TARGET_RISCV64GC_UNKNOWN_NONE_ELF_RUNNER=qemu-system-riscv64 -machine sifive_u -bios none -s -S -nographic -kernel
+export RISKY_DEBUG=on
 cargo run +nightly
 ``` 
 

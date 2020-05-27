@@ -8,7 +8,7 @@
     <option name="backtrace" value="SHORT" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
     <envs>
-      <env name="CARGO_TARGET_RISCV64GC_UNKNOWN_NONE_ELF_RUNNER" value="qemu-system-riscv64 -machine sifive_u -bios none -s -S -nographic -kernel" />
+      <env name="RISKY_DEBUG" value="on" />
     </envs>
     <method v="2">
       <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />

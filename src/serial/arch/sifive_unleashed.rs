@@ -1,8 +1,7 @@
 //! TODO: Refactor to be swappable for a second serial printer with support for alloc and format! etc
 
 use volatile::Volatile;
-use spin::Mutex;
-use core::fmt;
+use crate::serial::SerialWriter;
 
 /// The Uart struct is the layout of the uart control structure in memory,
 /// according to the SiFive manual found here:
@@ -28,7 +27,7 @@ const UART0: *mut Volatile<Uart> = 0x10010000 as *mut Uart as *mut Volatile<Uart
 #[allow(dead_code)]
 const UART1: *mut Volatile<Uart> = 0x10011000 as *mut Uart as *mut Volatile<Uart>;
 
-pub unsafe fn write_u8(c: u8) {
+unsafe fn write_u8(c: u8) {
     // manual spinlock (wait for uart ready)
     while (*UART0).read().txdata & 0x8000000 != 0 {}
 
@@ -37,35 +36,11 @@ pub unsafe fn write_u8(c: u8) {
     })
 }
 
-pub struct Serial {}
 
-impl fmt::Write for Serial {
-    fn write_str(&mut self, s: &str) -> fmt::Result {
-        for byte in s.bytes() {
-            unsafe {
-                write_u8(byte);
-            }
-        }
-        Ok(())
+pub struct SiFiveUnleashedWriter;
+
+impl SerialWriter for SiFiveUnleashedWriter {
+    unsafe fn write_u8(&self, c: u8) {
+        write_u8(c)
     }
-}
-
-pub static SERIAL_WRITER: Mutex<Serial> = Mutex::new(Serial{});
-
-#[macro_export]
-macro_rules! println {
-    ($fmt:expr) => (print!(concat!($fmt, "\n")));
-    ($fmt:expr, $($arg:tt)*) => (print!(concat!($fmt, "\n"), $($arg)*));
-}
-
-#[macro_export]
-macro_rules! print {
-    ($($arg:tt)*) => ({
-        $crate::serial::_print(format_args!($($arg)*));
-    });
-}
-
-pub fn _print(args: fmt::Arguments) {
-    use core::fmt::Write;
-    SERIAL_WRITER.lock().write_fmt(args).unwrap();
 }

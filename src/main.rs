@@ -3,8 +3,13 @@
 #![feature(lang_items)]
 #![feature(start)]
 
+#![feature(custom_test_frameworks)]
+#![test_runner(crate::test_runner)]
+#![reexport_test_harness_main = "test_main"]
+
 mod std;
 mod serial;
+mod interrupt;
 
 use core::panic::PanicInfo;
 
@@ -14,6 +19,11 @@ extern {
 
 #[panic_handler]
 fn panic_handler(_info: &PanicInfo) -> ! {
+    #[cfg(test)]
+    println!("Test failed");
+
+    println!("Panic");
+
     unsafe {
         wfi()
     }
@@ -21,8 +31,18 @@ fn panic_handler(_info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn kernel_main() -> ! {
+    serial::default().init();
 
-    println!("Hello world!");
+
+    #[cfg(test)]
+    {
+        test_main();
+    }
+    #[cfg(not(test))]
+    {
+        println!("Hello world!");
+    }
+
 
     unsafe {
         wfi()
@@ -32,6 +52,17 @@ pub extern "C" fn kernel_main() -> ! {
 #[no_mangle]
 pub extern fn abort() {
     panic!("abort!");
+}
+
+#[cfg(test)]
+fn test_runner(tests: &[&dyn Fn()]) {
+    println!("Running {} tests", tests.len());
+    for (index, test) in tests.iter().enumerate() {
+        test();
+        println!("Test {} passed", index + 1);
+    }
+
+    println!("Tests complete");
 }
 
 

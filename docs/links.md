@@ -55,3 +55,6 @@ https://wiki.osdev.org/HiFive-1_Bare_Bones
 ## Phil-opp's kernel in rust tutorial
 https://os.phil-opp.com/
 https://os.phil-opp.com/printing-to-screen/
+
+## SiFive Unleashed manual
+description: SiFive Unleasehed specific information, about memory maps, memory layouts and hardware components.

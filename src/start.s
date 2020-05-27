@@ -28,8 +28,3 @@ entry:
 wfi:
     wfi
     j wfi
-
-.section .bss
-EARLY_KERNEL_STACK_BOTTOM:
-    .space 128
-EARLY_KERNEL_STACK_TOP:
