@@ -196,13 +196,12 @@ sa::assert_eq_size!(Plic, [u8; 64 * 1024 * 1024]);
 
 #[cfg(test)]
 mod tests {
-    use crate::interrupt::arch::plic::Plic;
+    use crate::interrupt::platform::arch::riscv64gc_generic::plic::Plic;
 
     #[test_case]
     pub fn test_plic() {
         use crate::println;
         pub const PLIC_TEST: *mut Plic = 0x0C00_0000 as *mut Plic;
-
 
         assert_eq!(unsafe{&(*PLIC_TEST).priorities} as *const _ as usize,       PLIC_TEST as usize + 0x0000_0000);
 

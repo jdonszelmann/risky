@@ -2,7 +2,7 @@ use core::fmt;
 use crate::serial::SERIAL_WRITER;
 #[macro_export]
 macro_rules! println {
-    ($fmt:expr) => (print!(concat!($fmt, "\n")));
+    ($fmt:expr) => (crate::print!(concat!($fmt, "\n")));
     ($fmt:expr, $($arg:tt)*) => (crate::print!(concat!($fmt, "\n"), $($arg)*));
 }
 
@@ -17,7 +17,9 @@ pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
     unsafe {
         if let Some(ref s) = SERIAL_WRITER {
-            s.lock().write_fmt(args).unwrap()
+            let mut a = s.lock();
+            a.write_fmt(args).unwrap();
+            drop(a);
         };
     }
 }

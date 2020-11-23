@@ -2,7 +2,7 @@
 # How Risky boots
  
 The first code that is executed on boot, is a short bit of assembly in 
-[start.s](../src/start.s). Unfortunately this is necessary. 
+[start.s](../src/arch/sifive_unleashed/start.S). Unfortunately this is necessary. 
 Rust just can't function without it. This file is bound to change, 
 and the docs might not always update. But I will try to explain what it does 
 in the current state as best I can.

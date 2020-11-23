@@ -11,13 +11,14 @@ https://www.cl.cam.ac.uk/teaching/1617/ECAD+Arch/files/docs/RISCVGreenCardv8-201
 ## Manual
 description: The official RiscV manual about the base instruction set and some of it's extensions.   
 keywords: instruction set, isa, riscv  
-https://content.riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf
+https://content.riscv.org/wp-content/uploads/2019/06/riscv-spec.pdf
 
 ## Privileged Manual
 description: The official RiscV manual about the privileged instruction set.  
 keywords: paging, virtual memory, vm, protection  
-https://content.riscv.org/wp-content/uploads/2017/05/riscv-privileged-v1.10.pdf
-
+https://content.riscv.org/wp-content/uploads/2019/08/riscv-privileged-20190608-1.pdf
+(unleashed specific:)
+https://content.riscv.org/wp-content/uploads/2017/05/riscv-privileged-v1.10.pdf  
 
 ## Stphen Marz' osblog
 description: A very useful though barebones tutorial on how to boot (into rust!) on riscV cpus.  
@@ -27,9 +28,9 @@ http://osblog.stephenmarz.com/ch1.html
 ## Twilco's riscv from scratch
 description: A good instruction on how to set up the linker, debugger and compiler for riscv barebones targets.  
 links: gdb, linker, debug, assembly, tutorial  
-https://twilco.github.io/riscv-from-scratch/2019/04/27/riscv-from-scratch-1.html  
-https://twilco.github.io/riscv-from-scratch/2019/04/27/riscv-from-scratch-2.html  
-https://twilco.github.io/riscv-from-scratch/2019/04/27/riscv-from-scratch-3.html  
+https://twilco.github.io/riscv-from-scratch/2019/03/10/riscv-from-scratch-1.html
+https://twilco.github.io/riscv-from-scratch/2019/04/27/riscv-from-scratch-2.html
+https://twilco.github.io/riscv-from-scratch/2019/07/08/riscv-from-scratch-3.html
 https://twilco.github.io/riscv-from-scratch/2019/07/28/riscv-from-scratch-4.html    
 https://github.com/twilco/riscv-from-scratch
 
@@ -58,3 +59,5 @@ https://os.phil-opp.com/printing-to-screen/
 
 ## SiFive Unleashed manual
 description: SiFive Unleasehed specific information, about memory maps, memory layouts and hardware components.
+https://static.dev.sifive.com/FU540-C000-v1.0.pdf
+https://sifive.cdn.prismic.io/sifive%2F834354f0-08e6-423c-bf1f-0cb58ef14061_fu540-c000-v1.0.pdf

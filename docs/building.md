@@ -1,7 +1,7 @@
 
 # Building the Risky kernel 
 
-The entire build process is supplied by cargo. This means in theory you only need rust installed. However, you will need to install a riscv cross compiler as well to compile a few c and assembly files. This happens automatically through the [build.rs](../build.rs) script.
+The entire build process is supplied by cargo. This means in theory you only need rust installed. However, you will need to install a riscv cross compiler as well to compile a few c and assembly files. This happens automatically through the [build.rs](../build/build.rs) script.
 
 ## Installing rust
 

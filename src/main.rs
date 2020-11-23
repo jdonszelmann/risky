@@ -2,6 +2,8 @@
 #![no_main]
 #![feature(lang_items)]
 #![feature(start)]
+#![feature(asm)]
+#![feature(const_fn)]
 
 #![feature(custom_test_frameworks)]
 #![test_runner(crate::test_runner)]
@@ -10,29 +12,37 @@
 mod std;
 mod serial;
 mod interrupt;
+mod arch;
+mod pmm;
+mod system_info;
+mod ds;
 
 use core::panic::PanicInfo;
+use crate::system_info::SystemInfo;
+use crate::arch::kernel_exit;
+use crate::ds::range::Range;
 
-extern {
-    fn wfi() -> !;
-}
 
 #[panic_handler]
-fn panic_handler(_info: &PanicInfo) -> ! {
+fn panic_handler(info: &PanicInfo) -> ! {
     #[cfg(test)]
-    println!("Test failed");
+    if let Some(s) = info.payload().downcast_ref::<&str>() {
+        println!("panic occurred: {:?}", s);
+    } else {
+        println!("panic occurred");
+    }
 
     println!("Panic");
 
-    unsafe {
-        wfi()
-    }
+    kernel_exit()
 }
 
-#[no_mangle]
-pub extern "C" fn kernel_main() -> ! {
+/// Kernel main takes one parameter, a range of addresses in which kernel code and data is stored.
+fn kernel_main(kernel: Range) -> () {
     serial::default().init();
+    println!("{}", SystemInfo::get());
 
+    // pmm::Pmm::from_ram(&[kernel]).set_global();
 
     #[cfg(test)]
     {
@@ -41,11 +51,6 @@ pub extern "C" fn kernel_main() -> ! {
     #[cfg(not(test))]
     {
         println!("Hello world!");
-    }
-
-
-    unsafe {
-        wfi()
     }
 }
 

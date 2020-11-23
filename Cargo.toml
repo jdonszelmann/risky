@@ -3,8 +3,7 @@ name = "risky"
 version = "0.1.0"
 authors = ["jonay2000 <jonabent@gmail.com>"]
 edition = "2018"
-build = "build.rs"
-
+build = "build/build.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 
@@ -14,6 +13,7 @@ lazy_static = {version="1.4.0", features=["spin_no_std"]}
 spin = "0.5.2"
 bitflags = "1.2.1"
 static_assertions = "1.1.0"
+futures = {version="0.3.5", default-features=false, features=["async-await"]}
 
 [build-dependencies]
 cc = "1.0.54"
@@ -25,7 +25,7 @@ bench = false
 
 [profile.release]
 codegen-units = 11
-debug = false
+debug = true
 opt-level = 3
 lto = true
 

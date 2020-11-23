@@ -6,8 +6,7 @@ runner = "bash runner.sh"
 
 #  -serial stdio -monitor none
 rustflags = [
-    "-C", "link-arg=-Tlink.ld",
-    #"-C", "link-arg=-Tlink.ld",
+    "-C", "link-arg=-Tsrc/arch/sifive_unleashed/link.ld",
 ]
 
 

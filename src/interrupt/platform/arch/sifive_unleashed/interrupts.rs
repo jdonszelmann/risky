@@ -1,4 +1,3 @@
-use crate::interrupt::arch::plic::Plic;
 
 #[repr(usize)]
 enum Interrupts {

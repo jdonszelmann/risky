@@ -1,14 +1,24 @@
 #!/bin/bash
 set -e
 
-if [ "$RISKY_DEBUG" = "on" ]; then
-  echo "Debug mode: waiting for a debugger to attach"
-  qemu-system-riscv64 -machine sifive_u -bios none -nographic -s -S -kernel "$1"
-  exit 0
-elif [ "$RISKY_TEST" = "on" ]; then
+
+echo "test binary: $1"
+ln -sf $1 ./target/binary
+
+if [ "$RISKY_TEST" = "on" ]; then
+
   echo "Test mode"
-  qemu-system-riscv64 -machine sifive_u -bios none -nographic -kernel "$1" > test.log &
-  PID="$!"
+  if [ "$RISKY_DEBUG" = "on" ]; then
+      echo "Debug test mode: waiting for a debugger to attach"
+      qemu-system-riscv64 -machine sifive_u -bios none -nographic -s -S -kernel "$1" > test.log &
+      PID="$!"
+  else
+
+      qemu-system-riscv64 -machine sifive_u -bios none -nographic -kernel "$1" > test.log &
+      PID="$!"
+  fi
+
+  echo "$PID"
 
   tail -f -n +1 "test.log" | while read line
   do
@@ -23,7 +33,10 @@ elif [ "$RISKY_TEST" = "on" ]; then
 
   kill "$PID"
   rm test.log
-
+elif [ "$RISKY_DEBUG" = "on" ]; then
+  echo "Debug mode: waiting for a debugger to attach"
+  qemu-system-riscv64 -machine sifive_u -bios none -nographic -s -S -kernel "$1"
+  exit 0
 else
   echo "Running $1"
   qemu-system-riscv64 -machine sifive_u -bios none -nographic -kernel "$1"
